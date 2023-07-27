@@ -14,20 +14,11 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USR }}
           password: ${{ secrets.DOCKERHUB_PWD }}
-      - name: Docker build chatservice
+      - name: Docker build 
         uses: docker/build-push-action@v4.1.1
         with: 
           context: ./src
           file: ./src/Dockerfile
-          push: true
-          tags: |
-            fabricioveronez/conversao-temperatura:v${{ github.run_number }}
-            fabricioveronez/conversao-temperatura:latest
-      - name: Docker build webapp
-        uses: docker/build-push-action@v4.1.1
-        with: 
-          context: ./webapp
-          file: ./webapp/Dockerfile
           push: true
           tags: |
             fabricioveronez/conversao-temperatura:v${{ github.run_number }}
