@@ -38,26 +38,23 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Azure Login
+        uses: Azure/login@v1.4.6
+        with:
+          creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
+
       - name: Azure Kubernetes set context
         uses: Azure/aks-set-context@v3
         with:
-          # Resource Group Name
-          resource-group: 
-          # AKS Cluster Name
-          cluster-name: 
-          # AKS Cluster Subscription
-          subscription: # optional
-          # Get cluster admin credentials. Values: true or false
-          admin: # optional
-          # Enables kubelogin for non-admin user scenario. Values: true or false
-          use-kubelogin: # optional
+          resource-group: live
+          cluster-name: live
 
-      - name: Deploy das aplicações
-        uses: Azure/k8s-deploy@v4.9
-        with:
-          manifests: |
-            k8s/deploy-chatservice.yaml
-            k8s/deploy-webapp.yaml
-          images: |
-            fabricioveronez/conversao-temperatura:v${{ github.run_number }}
-            fabricioveronez/conversao-temperatura:v${{ github.run_number }}
+      # - name: Deploy das aplicações
+      #   uses: Azure/k8s-deploy@v4.9
+      #   with:
+      #     manifests: |
+      #       k8s/deploy-chatservice.yaml
+      #       k8s/deploy-webapp.yaml
+      #     images: |
+      #       fabricioveronez/conversao-temperatura:v${{ github.run_number }}
+      #       fabricioveronez/conversao-temperatura:v${{ github.run_number }}
