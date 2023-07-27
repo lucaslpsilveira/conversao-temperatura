@@ -11,4 +11,13 @@ jobs:
       - name: Obtendo o código fonte
         uses: actions/checkout@v3.5.3
         
-      - run: echo "pipeline"
+      - name: Docker build 
+        uses: docker/build-push-action@v4.1.1
+        with: 
+          context: ./src
+          file: ./src/Dockerfile
+          push: true
+          tags: |
+            fabricioveronez/conversao-temperatura:v${{ github.run_number }}
+            fabricioveronez/conversao-temperatura:latest
+
