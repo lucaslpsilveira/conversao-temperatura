@@ -27,3 +27,12 @@ jobs:
             fabricioveronez/conversao-temperatura:v${{ github.run_number }}
             fabricioveronez/conversao-temperatura:latest
 
+  CD:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obtendo o código fonte
+        uses: actions/checkout@v3.5.3
+      - name: Azure Login
+        uses: Azure/login@v1.4.6
+        with:
+          creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
