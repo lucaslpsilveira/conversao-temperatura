@@ -87,7 +87,7 @@ jobs:
             fabricioveronez/conversao-temperatura:v${{ github.run_number }}
   Deploy-Producao:
     runs-on: ubuntu-latest
-    needs: [CI]
+    needs: [Deploy-Homologacao]
     environment: 
       name: producao
     steps:
