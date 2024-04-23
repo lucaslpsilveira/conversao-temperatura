@@ -59,4 +59,46 @@ jobs:
             ./k8s/deployment.yaml
           images: |
             fabricioveronez/exemplo-githubactions:v${{ github.run_number }}
+            
+  CD-Homologacao:
+    runs-on: ubuntu-latest
+    environment: homologacao
+    needs: [CI]
+    steps:
+      - name: Obtendo o código fonte
+        uses: actions/checkout@v4.1.2
+      - name: Configuração do Kubeconfig
+        uses: Azure/k8s-set-context@v3.0
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.K8S_CONFIG }}
+      - name: Aplicando o Deploy
+        uses: Azure/k8s-deploy@v5
+        with:
+          namespace: "desenvolvimento"
+          manifests: |
+            ./k8s/deployment.yaml
+          images: |
+            fabricioveronez/exemplo-githubactions:v${{ github.run_number }}
+
+  CD-Producao:
+    runs-on: ubuntu-latest
+    environment: producao
+    needs: [CI]
+    steps:
+      - name: Obtendo o código fonte
+        uses: actions/checkout@v4.1.2
+      - name: Configuração do Kubeconfig
+        uses: Azure/k8s-set-context@v3.0
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.K8S_CONFIG }}
+      - name: Aplicando o Deploy
+        uses: Azure/k8s-deploy@v5
+        with:
+          namespace: "desenvolvimento"
+          manifests: |
+            ./k8s/deployment.yaml
+          images: |
+            fabricioveronez/exemplo-githubactions:v${{ github.run_number }}
     
