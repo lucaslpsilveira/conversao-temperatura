@@ -53,6 +53,7 @@ jobs:
       - name: Aplicando o Deploy
         uses: Azure/k8s-deploy@v5
         with:
+          namespace: "desenvolvimento"
           manifests: |
             ./k8s/deployment.yaml
           images: |
