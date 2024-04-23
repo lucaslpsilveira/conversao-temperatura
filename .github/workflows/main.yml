@@ -39,7 +39,7 @@ jobs:
           tags: |
             fabricioveronez/exemplo-githubactions:v${{ github.run_number }}
             fabricioveronez/exemplo-githubactions:latest
-  CD:
+  CD-Desenvolvimento:
     runs-on: ubuntu-latest
     needs: [CI]
     steps:
