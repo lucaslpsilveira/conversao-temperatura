@@ -41,6 +41,7 @@ jobs:
             fabricioveronez/exemplo-githubactions:latest
   CD-Desenvolvimento:
     runs-on: ubuntu-latest
+    environment: desenvolvimento
     needs: [CI]
     steps:
       - name: Obtendo o código fonte
