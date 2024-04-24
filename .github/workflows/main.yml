@@ -65,8 +65,8 @@ jobs:
     environment: homologacao
     needs: [CI]
     steps:
-#      - name: Obtendo o código fonte
-#        uses: actions/checkout@v4.1.2
+      - name: Obtendo o código fonte
+        uses: actions/checkout@v4.1.2
       - name: Configuração do Kubeconfig
         uses: Azure/k8s-set-context@v3.0
         with:
