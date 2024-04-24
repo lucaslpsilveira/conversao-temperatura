@@ -84,7 +84,7 @@ jobs:
   CD-Producao:
     runs-on: ubuntu-latest
     environment: producao
-    needs: [CI]
+    needs: [CD-Homologacao]
     steps:
       - name: Obtendo o código fonte
         uses: actions/checkout@v4.1.2
