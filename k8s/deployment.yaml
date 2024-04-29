@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: conversao-temperatura
-        image: fabricioveronez/exemplo-githubactions
+        image: fabricioveronez/conversao-temperatura
         ports:
         - containerPort: 8080
 ---

@@ -37,9 +37,23 @@ jobs:
           file: ./src/Dockerfile
           push: true
           tags: |
-            fabricioveronez/exemplo-githubactions:v${{ github.run_number }}
-            fabricioveronez/exemplo-githubactions:latest
-  CD-Desenvolvimento:
+            fabricioveronez/conversao-temperatura:v${{ github.run_number }}
+            fabricioveronez/conversao-temperatura:latest
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.16.1
+        with:
+          image-ref: fabricioveronez/conversao-temperatura:${{github.run_number}}
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          exit-code: 0
+          severity: UNKNOWN,CRITICAL,HIGH,MEDIUM,LOW
+      
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
+  CD:
     runs-on: ubuntu-latest
     environment: desenvolvimento
     needs: [CI]
@@ -59,45 +73,5 @@ jobs:
             ./k8s/deployment.yaml
           images: |
             fabricioveronez/exemplo-githubactions:v${{ github.run_number }}
-            
-  CD-Homologacao:
-    runs-on: ubuntu-latest
-    environment: homologacao
-    needs: [CI]
-    steps:
-      - name: Obtendo o código fonte
-        uses: actions/checkout@v4.1.2
-      - name: Configuração do Kubeconfig
-        uses: Azure/k8s-set-context@v3.0
-        with:
-          method: kubeconfig
-          kubeconfig: ${{ secrets.K8S_CONFIG }}
-      - name: Aplicando o Deploy
-        uses: Azure/k8s-deploy@v5
-        with:
-          namespace: "homologacao"
-          manifests: |
-            ./k8s/deployment.yaml
-          images: |
-            fabricioveronez/exemplo-githubactions:v${{ github.run_number }}
 
-  CD-Producao:
-    runs-on: ubuntu-latest
-    environment: producao
-    needs: [CD-Homologacao]
-    steps:
-      - name: Obtendo o código fonte
-        uses: actions/checkout@v4.1.2
-      - name: Configuração do Kubeconfig
-        uses: Azure/k8s-set-context@v3.0
-        with:
-          method: kubeconfig
-          kubeconfig: ${{ secrets.K8S_CONFIG }}
-      - name: Aplicando o Deploy
-        uses: Azure/k8s-deploy@v5
-        with:
-          manifests: |
-            ./k8s/deployment.yaml
-          images: |
-            fabricioveronez/exemplo-githubactions:v${{ github.run_number }}
     
