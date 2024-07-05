@@ -47,7 +47,7 @@ router.put('/unreadyfor/:seconds', (req, res) => {
     res.send("OK");
 });
 
-var healthMid = function (req, res, next) {
+const healthMid = function (req, res, next) {
     
     if (isHealth) {
         next();
