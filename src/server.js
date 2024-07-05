@@ -1,6 +1,7 @@
 const express = require('express');
 const os = require('os');
 const app = express();
+app.disable("x-powered-by");
 const conversor = require('./convert');
 const bodyParser = require('body-parser');
 const config = require('./config/system-life');
