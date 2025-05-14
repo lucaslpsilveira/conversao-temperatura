@@ -36,16 +36,17 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USR }}
           password: ${{ secrets.DOCKERHUB_PWD }}
-        
-      - name: Docker build 
-        uses: docker/build-push-action@v5.3.0
-        with: 
-          context: ./src
-          file: ./src/Dockerfile
-          push: true
-          tags: |
-            fabricioveronez/conversao-temperatura:v${{ github.run_number }}
-            fabricioveronez/conversao-temperatura:latest
+
+      # Comentado o processo de build  
+      # - name: Docker build 
+      #   uses: docker/build-push-action@v5.3.0
+      #   with: 
+      #     context: ./src
+      #     file: ./src/Dockerfile
+      #     push: true
+      #     tags: |
+      #       fabricioveronez/conversao-temperatura:v${{ github.run_number }}
+      #       fabricioveronez/conversao-temperatura:latest
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.16.1
